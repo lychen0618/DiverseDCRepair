@@ -1,0 +1,16 @@
+<!-- Error percentages for dependencies and comparisons
+        All percentages are wrt table sizes (# tuples) -->
+<errorPercentages>
+    <defaultPercentage>1</defaultPercentage>
+    <!--
+        <vioGenQueries>
+            <vioGenQuery id="e1">
+                <comparison>(z1 == z2)</comparison>
+                <percentage>50.0</percentage>
+            </vioGenQuery>
+            <vioGenQuery id="e1">
+                <comparison>(c1 != c2)</comparison>
+                <percentage>50.0</percentage>
+            </vioGenQuery>
+    </vioGenQueries>-->
+</errorPercentages>

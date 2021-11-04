@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<errorPercentages>
+    <defaultPercentage>0.0</defaultPercentage>
+    <!--
+          e0: zip ->  city
+          e1: zip ->  state
+          e2: phone   ->  zip
+          e3: phone   ->  city
+          e4: phone   ->  state
+          e7: providernumber,measurecode  ->  stateavg
+          e8: state,measurecode   ->  stateavg
+         -->
+    <vioGenQueries>
+        <!-- $z1 == $z2, $c1 != $c2 -->
+        <vioGenQuery id="e1">
+            <comparison>(city1 != city2)</comparison>
+            <percentage>0.6</percentage>
+        </vioGenQuery>
+        <vioGenQuery id="e1">
+            <comparison>(zip1 == zip2)</comparison>
+            <percentage>0.4</percentage>
+        </vioGenQuery>
+        <!-- $z1 == $z2, $s1 != $s2 -->
+        <vioGenQuery id="e2">
+            <comparison>(state1 != state2)</comparison>
+            <percentage>0.3</percentage>
+        </vioGenQuery>
+        <vioGenQuery id="e2">
+            <comparison>(zip1 == zip2)</comparison>
+            <percentage>0.3</percentage>
+        </vioGenQuery>
+        <vioGenQuery id="e3">
+            <comparison>(stateavg1 != stateavg2)</comparison>
+            <percentage>0</percentage>
+        </vioGenQuery>
+        <vioGenQuery id="e3">
+            <comparison>(providernumber1 == providernumber2)</comparison>
+            <percentage>0.3</percentage>
+        </vioGenQuery>
+        <vioGenQuery id="e3">
+            <comparison>(measurecode1 == measurecode2)</comparison>
+            <percentage>0</percentage>
+        </vioGenQuery>
+        <!-- $s1 == $s2, $mc1 == $mc2, $avg1 != $avg2 -->
+        <vioGenQuery id="e4">
+            <comparison>(stateavg1 != stateavg2)</comparison>
+            <percentage>0</percentage>
+        </vioGenQuery>
+        <vioGenQuery id="e4">
+            <comparison>(state1 == state2)</comparison>
+            <percentage>0.1</percentage>
+        </vioGenQuery>
+        <vioGenQuery id="e4">
+            <comparison>(measurecode1 == measurecode2)</comparison>
+            <percentage>0</percentage>
+        </vioGenQuery>
+    </vioGenQueries>
+</errorPercentages>

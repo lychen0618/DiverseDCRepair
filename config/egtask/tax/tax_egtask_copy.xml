@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE doc [
+<!ENTITY SIZE "20000">
+<!ENTITY ERROR "1">
+<!ENTITY VAR "high">
+<!ENTITY errorpercentages SYSTEM "./error_percentages/1_high.xml">
+<!ENTITY NAME "tax">
+<!ENTITY dependencies SYSTEM "dependency/dependency.xml">
+<!ENTITY DATASETROOT "/home/lychen/labOfPaper/EnumDCRepair/data/input/dataset/">
+]>
+<task>
+    <!-- ****************************************************
+                      DATABASES
+    **************************************************** -->
+    <target>
+        <type>DBMS</type>
+        <access-configuration>
+            <driver>org.postgresql.Driver</driver>
+            <uri>jdbc:postgresql:exp_&NAME;_&SIZE;</uri>
+            <schema>target</schema>
+            <login>postgres</login>
+            <password>1218nishuai</password>
+        </access-configuration>
+        <import createTables="true">
+            <input type="csv" separator="," table="tax">&DATASETROOT;/&NAME;/&SIZE;/&NAME;_&SIZE;.csv</input>
+        </import>
+    </target>
+
+    <!-- ****************************************************
+                    DEPENDENCIES
+    **************************************************** -->
+    &dependencies;
+
+    <!-- ****************************************************
+                      CONFIGURATION
+    **************************************************** -->
+    <configuration>
+        <!-- To print extra information in the ouput (default = false) -->
+        <printLog>true</printLog>
+        <!-- To load DB every time on start (default = false) -->
+        <recreateDBOnStart>true</recreateDBOnStart>
+        <!-- To apply the changes (default = false) -->
+        <applyCellChanges>true</applyCellChanges>
+        <!-- To  apply cell changes on a copy of the original target, with a custom suffix (default = true) -->
+        <cloneTargetSchema>true</cloneTargetSchema>
+        <cloneSuffix>_dirty_&SIZE;_&ERROR;_&VAR;</cloneSuffix>
+        <!-- To export the dirty db -->
+        <exportDirtyDB>true</exportDirtyDB>
+        <!-- the path here is relative path of the location of this .xml file -->
+        <exportDirtyDBPath>&DATASETROOT;/&NAME;/&SIZE;/out/&SIZE;_&ERROR;%_&VAR;/</exportDirtyDBPath>
+        <exportDirtyDBType>CSV</exportDirtyDBType>
+        <!-- To export the changes -->
+        <exportCellChanges>true</exportCellChanges>
+        <exportCellChangesPath>&DATASETROOT;/&NAME;/&SIZE;/out/&SIZE;_&ERROR;%_&VAR;/changes.csv</exportCellChangesPath>
+        <!-- To compute an estimate of the repairability (default = false) -->
+        <estimateRepairability>true</estimateRepairability>
+        <!-- To check, at the end of the process, if changes are detectable. (default = false) -->
+        <checkChanges>true</checkChanges>
+        <!-- To compute an estimate of the repairability. Requires checkChanges = true. (default = false) -->
+        <estimateRepairability>true</estimateRepairability>
+        <!-- To use an optimized strategy for updates. (default = true) -->
+        <useDeltaDBForChanges>true</useDeltaDBForChanges>
+        <!-- To control the way in which changing the value -->
+        <dirtyStrategies>
+            <defaultStrategy>
+                <strategy chars="*" charsToAdd="6">TypoAddString</strategy>
+            </defaultStrategy>
+        </dirtyStrategies>
+        <!-- possible strategies
+            <strategy chars="*" charsToAdd="3">TypoAddString</strategy>
+            <strategy chars="*" charsToAdd="3">TypoAppendString</strategy>
+            <strategy charsToRemove="3">TypoRemoveString</strategy>
+            <strategy charsToSwitch="3">TypoSwitchValue</strategy>
+            <strategy>TypoActiveDomain</strategy>
+            <strategy>TypoRandom</strategy>
+        -->
+        <!-- The following parameters are used to control the sampling process.
+            All the fields are optional, but they may be crucial to obtain a good random sample.
+            In order to choose the cells to modify, BART will scan the result of a viogen query
+            using the following sampling algorithm:
+            1) First, a number of tuples are skipped. This is a random number choosed btw
+                0 and (offsetFactor * tableSize)
+            2) Then BART will scan the result and will pickup tuples
+            with a probability p = probabilityFactor.
+
+            BART uses three kinds of queries
+            - Symmetric queries: for symmetric viogen queries (see paper)
+            - Inequality queries: for viogen queries without equalities (i.e. inequalities only)
+            - Standard queries: for all other viogen queries
+        -->
+        <vioGenQueriesConfiguration>
+            <!-- STANDARD QUERIES -->
+            <probabilityFactorForStandardQueries>0.25</probabilityFactorForStandardQueries>
+            <offsetFactorForStandardQueries>0.05</offsetFactorForStandardQueries>
+            <!-- SYMMETRIC QUERIES -->
+            <probabilityFactorForSymmetricQueries>0.0005</probabilityFactorForSymmetricQueries>
+            <offsetFactorForSymmetricQueries>0.05</offsetFactorForSymmetricQueries>
+            <!-- INEQUALITY QUERIES -->
+            <probabilityFactorForInequalityQueries>0.05</probabilityFactorForInequalityQueries>
+            <offsetFactorForInequalityQueries>0.05</offsetFactorForInequalityQueries>
+            <windowSizeFactorForInequalityQueries>1.5</windowSizeFactorForInequalityQueries>
+        </vioGenQueriesConfiguration>
+
+        &errorpercentages;
+
+    </configuration>
+</task>

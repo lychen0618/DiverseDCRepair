@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<errorPercentages>
+    <defaultPercentage>0.0</defaultPercentage>
+    <!--
+     e1: zip ->  city
+     e2: zip ->  state
+     e3: haschild, state   ->  childexemp
+     e4: maritalstatus,state   ->  singleexemp
+     e5: state1 == state2, salary1 > salary2, rate1 < rate2
+    -->
+    <vioGenQueries>
+        <!-- $zip1 == $zip2, $city1 != $city2 -->
+        <vioGenQuery id="e1">
+            <comparison>(city1 != city2)</comparison>
+            <percentage>1.6</percentage>
+        </vioGenQuery>
+        <vioGenQuery id="e1">
+            <comparison>(zip1 == zip2)</comparison>
+            <percentage>0.6</percentage>
+        </vioGenQuery>
+        <!-- $zip1 == $zip2, $state1 != $state2 -->
+        <vioGenQuery id="e2">
+            <comparison>(state1 != state2)</comparison>
+            <percentage>0.6</percentage>
+        </vioGenQuery>
+        <vioGenQuery id="e2">
+            <comparison>(zip1 == zip2)</comparison>
+            <percentage>0.8</percentage>
+        </vioGenQuery>
+        <!-- $haschild1 == $haschild2, $state1 == $state2, $childexemp1 != $childexemp2 -->
+        <vioGenQuery id="e3">
+            <comparison>(childexemp1 != childexemp2)</comparison>
+            <percentage>0.2</percentage>
+        </vioGenQuery>
+        <vioGenQuery id="e3">
+            <comparison>(state1 == state2)</comparison>
+            <percentage>0</percentage>
+        </vioGenQuery>
+        <vioGenQuery id="e3">
+            <comparison>(haschild1 == haschild2)</comparison>
+            <percentage>0</percentage>
+        </vioGenQuery>
+        <!-- $state1 == $state2, $salary1 > $salary2, $rate1 < $rate2 -->
+        <vioGenQuery id="e4">
+            <comparison>(state1 == state2)</comparison>
+            <percentage>0.02</percentage>
+        </vioGenQuery>
+        <vioGenQuery id="e4">
+            <comparison>(salary1 &gt; salary2)</comparison>
+            <percentage>0.02</percentage>
+        </vioGenQuery>
+        <vioGenQuery id="e4">
+            <comparison>(rate1 &lt; rate2)</comparison>
+            <percentage>0</percentage>
+        </vioGenQuery>
+    </vioGenQueries>
+</errorPercentages>
