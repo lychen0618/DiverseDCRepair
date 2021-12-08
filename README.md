@@ -1,5 +1,5 @@
 ### Diversifying Repairs of Denial Constraint Violations
-This repository contains the source code of our paper "Diversifying Repairs of Denial Constraint Violations" submitted to the World Wide Web journal.
+This repository contains the source code of our paper "Diversifying Repairs of Denial Constraint Violations" submitted to the Information Systems journal.
 
 #### Structure
 ```txt
